@@ -53,6 +53,9 @@ class ProductHttpRepository {
   int deleteById(int id) {
     // http 통신 코드
     list = list.where((product) => product.id != id).toList();
+    if (id == 4) {
+      return -1;
+    }
     return 1;
   }
 }
