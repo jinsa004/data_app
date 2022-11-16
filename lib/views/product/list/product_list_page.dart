@@ -1,4 +1,5 @@
 import 'package:data_app/controller/product_controller.dart';
+import 'package:data_app/views/product/list/product_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,7 +9,7 @@ class ProductListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pc = ref.read(productController);
-    pc.findAll();
+    final pm = ref.watch(productListViewModel);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -19,15 +20,15 @@ class ProductListPage extends ConsumerWidget {
         title: Text("product_list_page"),
       ),
       body: ListView.builder(
-        itemCount: 5,
+        itemCount: 3,
         itemBuilder: (context, index) => ListTile(
           onTap: () {},
           leading: Icon(Icons.account_balance_wallet),
           title: Text(
-            "바나나",
+            "${pm[index].name}",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: Text("1000"),
+          subtitle: Text("${pm[index].price}"),
         ),
       ),
     );

@@ -1,4 +1,9 @@
 import 'package:data_app/domain/product/product.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final productHttpRepository = Provider<ProductHttpRepository>((ref) {
+  return ProductHttpRepository();
+});
 
 // 밑에서 사용되는 모든 Product는 실전에서는 DTO화할 것!
 class ProductHttpRepository {
