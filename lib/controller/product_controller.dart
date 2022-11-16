@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:data_app/domain/product/product.dart';
 import 'package:data_app/domain/product/product_http_repository.dart';
+import 'package:data_app/main.dart';
 import 'package:data_app/views/components/my_alert_dialog.dart';
 import 'package:data_app/views/product/list/product_list_view_store.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,7 +15,11 @@ final productController = Provider<ProductController>((ref) {
   return ProductController(ref);
 });
 
+/**
+ * 컨트롤러 : 비즈니스 로직 담당 (화면전환 등)
+ */
 class ProductController {
+  final context = navigatorKey.currentContext!;
   final Ref _ref;
   ProductController(this._ref);
 
@@ -33,7 +38,7 @@ class ProductController {
     _ref.read(productListViewStore.notifier).nfAddProduct(productRespDto);
   }
 
-  void deleteById(int id, BuildContext context) {
+  void deleteById(int id) {
     int result = _ref.read(productHttpRepository).deleteById(id);
     if (result == 1) {
       _ref.read(productListViewStore.notifier).removeProduct(id);
@@ -45,9 +50,11 @@ class ProductController {
     }
   }
 
-  void updateById(int id) {
-    Product productPS = _ref.read(productHttpRepository).findById(id);
-    productPS.price = 20000;
-    _ref.read(productListViewStore.notifier).updateProduct(productPS);
+  void updateById(Product product) {
+    Product productPS = _ref.read(productHttpRepository).findById(product.id);
+    productPS.price = product.price;
+    Product productRespDto =
+        _ref.read(productHttpRepository).updateById(product.id, productPS);
+    _ref.read(productListViewStore.notifier).updateProduct(productRespDto);
   }
 }

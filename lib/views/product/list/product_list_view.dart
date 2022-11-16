@@ -32,7 +32,7 @@ class ProductListView extends ConsumerWidget {
         itemCount: pm.length,
         itemBuilder: (context, index) => ListTile(
           onTap: () {
-            pc.deleteById(pm[index].id, context);
+            pc.deleteById(pm[index].id);
           },
           leading: Icon(Icons.account_balance_wallet),
           title: Text(
@@ -41,7 +41,7 @@ class ProductListView extends ConsumerWidget {
           ),
           subtitle: Text("${pm[index].price}"),
           onLongPress: () {
-            pc.updateById(pm[index].id);
+            pc.updateById(Product(pm[index].id, pm[index].name, 20000));
           },
         ),
       ),
